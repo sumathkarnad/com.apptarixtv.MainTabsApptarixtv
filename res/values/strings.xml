@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">ApptarixTV</string>
+    <string name="home_txt">It is your TV hang-out. See what your friends are watching and talking about, what is hot and what is not on TV. Chat along, join your friends or invite them to watch together…</string>
+    <string name="invitefrnd">Hi Guys! Apptarix TV is the coolest way to watch TV ; Join me and explore the what people like on TV, and watch your favorite program together with friends and let the world know what you think about it.</string>
+    <string name="world_watch">WORLD IS WATCHING</string>
+    <string name="frnd_watch">FRIENDS ARE WATCHING</string>
+     <string name="invitefrnduc1">Invite your facebook friends here and watching TV will be even more fun!</string>
+    
+</resources>

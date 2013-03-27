@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="left"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Black" >
+
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/mohsin" />
+
+        <TextView
+            android:id="@+id/txtUname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgProfile"
+            android:layout_marginLeft="21dp"
+            android:layout_toLeftOf="@+id/txtctime"
+            android:layout_toRightOf="@+id/imgProfile"
+            android:text="User Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/WhiteSmoke" />
+
+        <TextView
+            android:id="@+id/txtComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtUname"
+            android:layout_below="@+id/txtUname"
+            android:text="Comments on programm channel"
+            android:textColor="@color/WhiteSmoke"
+            android:maxLines="2" />
+
+        <TextView
+            android:id="@+id/txtctime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/txtUname"
+            android:text="  time"
+            android:textColor="@color/WhiteSmoke" />
+
+    </RelativeLayout>
+
+</LinearLayout>

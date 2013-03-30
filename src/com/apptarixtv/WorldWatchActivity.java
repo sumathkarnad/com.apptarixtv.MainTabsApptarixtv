@@ -67,7 +67,7 @@ public class WorldWatchActivity extends Activity{
 	LazyAdapter adapter;
 //	ToggleButton toglww;
 	TextView txtchathead;
-	ProgressBar pgbarchat;
+//	ProgressBar pgbarchat;
 	 ArrayList<ProgramComment> progmcomnt;
 	 ListView chatlist;
 	 
@@ -104,7 +104,7 @@ public class WorldWatchActivity extends Activity{
 			 btn_frnd_watch=(Button) app.findViewById(R.id.btn_frnd);
 			 btn_all_watch=(Button) app.findViewById(R.id.btn_all);
 			txtchathead=(TextView) app.findViewById(R.id.textchatheading);
-			pgbarchat=(ProgressBar) app.findViewById(R.id.chatPgbar);
+//			pgbarchat=(ProgressBar) app.findViewById(R.id.chatPgbar);
 			txtchat=(EditText) app.findViewById(R.id.txtchat);
 			btnPost=(Button) app.findViewById(R.id.btnPost);
 			imgBrowse=(ImageView) app.findViewById(R.id.imgbrowse);

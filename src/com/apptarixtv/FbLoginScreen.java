@@ -49,6 +49,7 @@ import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FbDialog;
+import com.facebook.android.Util;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -204,19 +205,25 @@ public class FbLoginScreen extends Activity {
 		}
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
-			
-			
-			
-//			validateFBUser();
 			JSONObject jresult;
-			String isvalidstr = null;
+			String isvalidstr="";
+			int status = 0;
 			if(resp!=null){
 			
 			try {
 				
 				jresult = new JSONObject(resp);
-				 isvalidstr=jresult.getString("user");
+				try {
+					 isvalidstr=jresult.getString("user");
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+					status=jresult.getInt("status");
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 				Log.e(TAG, "valid or not : "+isvalidstr);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -234,7 +241,7 @@ public class FbLoginScreen extends Activity {
 			}
 			
 			
-			if(isvalidstr.equalsIgnoreCase("Valid")){
+			if(isvalidstr.equalsIgnoreCase("Valid")||status==1){
 				
 				 if(isfirsttime){
 					 SharedPreferences.Editor prefsEditor = fbPrefs.edit();
@@ -321,6 +328,7 @@ public class FbLoginScreen extends Activity {
 				JSONObject obj=new JSONObject(resp);
 				 responsecode=obj.getInt("responseCode");
 				 responsemsg=obj.getString("responseMessage");
+				 if(responsecode==200)
 				 status=obj.getInt("status");
 				 appuserid=obj.getString("id");
 				 fbUserid=obj.getString("fb_user_id");
@@ -330,6 +338,8 @@ public class FbLoginScreen extends Activity {
 				e.printStackTrace();
 			}
 			if(responsecode==200&&status==1){
+				
+				
 				Toast.makeText(getApplicationContext(), "Rgistration done successfully",Toast.LENGTH_LONG).show();
 				Intent startIntent=new Intent(getApplicationContext(), WorldWatchActivity.class);
 		        startActivity(startIntent);
@@ -395,10 +405,10 @@ public class FbLoginScreen extends Activity {
 		                    Log.e("", " ddd exp :"+facebook.getAccessExpires());
 		                   
 		                    //temporarily commenting below line
-//		                    new CheckFbUserOnserver().execute("");
-		                    Intent startIntent=new Intent(getApplicationContext(), CheckFrnd.class);
-		    		        startActivity(startIntent);
-		    				finish();
+		                    new CheckFbUserOnserver().execute("");
+//		                    Intent startIntent=new Intent(getApplicationContext(), CheckFrnd.class);
+//		    		        startActivity(startIntent);
+//		    				finish();
 		                }
 		    
 		                @Override
@@ -428,12 +438,6 @@ public class FbLoginScreen extends Activity {
 	
 
 	public String registerUser() {
-		
-//		String url = "http://ec2-50-19-169-217.compute-1.amazonaws.com/apptrix/webservice/register.php";
-		
-		//i will check this
-		
-		
 		RequestParams params = new RequestParams();
 		 params.put("apikey","ac2fdfd5fec83138415b9f98c82f0aac");    
 		 params.put("fb_user_id", uid);                              
@@ -477,30 +481,7 @@ public class FbLoginScreen extends Activity {
 //		Log.d(TAG, "response :"+responsehandler);
 		
 		return jsonresp;
-//		JSONObject json = new JSONObject();
-//		try {
-//			json.put("apikey","ac2fdfd5fec83138415b9f98c82f0aac");
-//			json.put("fb_user_id", uid);
-//			json.put("name", fname);
-//			json.put("last_name",lname );
-//			json.put("first_name",fname);
-//			json.put("gender", gender);
-//			json.put("language", "Hindi");
-//			json.put("username", uname);
-//			json.put("profile_pic_url", "picture location");
-//			json.put("education", "");
-//			json.put("email", email);
-//			json.put("relationship_status", relationship);
-//			json.put("work", "");
-//			json.put("dob", dob);
-//			
-//			Log.e(TAG, "Registration json :"+json.toString());
-//			return new DoPost().doPost(json.toString(), ApptarixConstant.REGISTER_USER);
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return null;
-//		}
+
 		
 	}
 
@@ -589,6 +570,7 @@ public class FbLoginScreen extends Activity {
 	      
 	      try {
 	              Log.e("sss","Json "+ facebook.request("me"));
+	       
 	      } catch (MalformedURLException e1) {
 	              // TODO Auto-generated catch block
 	              e1.printStackTrace();
@@ -615,8 +597,17 @@ public class FbLoginScreen extends Activity {
 		         Log.e("Lname", "Last Name====="+lname);
 		         
 		         gender=jObject.getString("gender");
-		         dob=jObject.getString("birthday");
-		         relationship=jObject.getString("relationship_status");
+		         try {
+		        	 dob=jObject.getString("birthday");
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+		         try {
+		        	 relationship=jObject.getString("relationship_status");
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+		        
 		        
 		         
 		         prefsEditor.putString("uname", uname);
@@ -633,31 +624,27 @@ public class FbLoginScreen extends Activity {
 				}
 		        
 				
-				
+				 prefsEditor.commit();
 
 				  try {
-			          img_value = new URL("http://graph.facebook.com/"+uid+"/picture?type=large");
+			          img_value = new URL("http://graph.facebook.com/"+uid+"/picture?type=small");
 			       
-			 } catch (MalformedURLException e) {}
+			 } catch (MalformedURLException e) {
+				 prefsEditor.commit();
+			 }
 			 try {
+				 SharedPreferences.Editor prefsEditor1 = fbPrefs.edit();
 			 	 Bitmap mIcon1 =BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
-			 	
-
-			       
-			        
 			        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 			        mIcon1.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   
 			        byte[] b = baos.toByteArray();
-			        prefsEditor.putString("propic", Base64.encodeToString(b, Base64.DEFAULT ));
-			        prefsEditor.commit();
+			        prefsEditor1.putString("propic", Base64.encodeToString(b, Base64.DEFAULT ));
+			        prefsEditor1.commit();
 			        Log.e(TAG, "after profile pic");
-			        prefsEditor.commit();
-			      
-			        
-			      
+			        prefsEditor1.commit();
 			        
 			 } catch (IOException e) {
-				 prefsEditor.commit();
+				
 			 } 
 				
 		        
@@ -668,7 +655,7 @@ public class FbLoginScreen extends Activity {
 			Log.e(TAG, "In Exception...."+e.getMessage());
 			prefsEditor.commit();
 		}
-		prefsEditor.commit();
+//		prefsEditor.commit();
 		/*  try
 		{
 			  JSONObject Location;

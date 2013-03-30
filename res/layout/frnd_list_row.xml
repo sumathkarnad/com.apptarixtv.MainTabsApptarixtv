@@ -18,14 +18,15 @@
 
     <TextView
         android:id="@+id/txtfrndname"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imgfrnd"
         android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+       android:textSize="14px"
         android:textColor="@color/White" 
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        />
 
     <ToggleButton
         android:id="@+id/btninvite"
@@ -33,12 +34,9 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/txtfrndname"
-        android:background="@drawable/toggle"
         android:textColor="#ffffff"
-        android:textOff="Connect                      Disconnect"
-        
-        android:textSize="12px"
-        android:layout_marginLeft="5dp"/>
+        android:textOff=""
+        android:textOn=""
+        android:textSize="12px" />
 
 </RelativeLayout>

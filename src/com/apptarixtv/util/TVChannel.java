@@ -2,8 +2,10 @@ package com.apptarixtv.util;
 
 public class TVChannel {
 	private String channelName;
-	private int chanelNo;
+	private String chanelNo;
 	private String channelCategory;
+	private String language;
+	
 	
 	public String getChannelName() {
 		return channelName;
@@ -11,10 +13,10 @@ public class TVChannel {
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
 	}
-	public int getChanelNo() {
+	public String getChanelNo() {
 		return chanelNo;
 	}
-	public void setChanelNo(int chanelNo) {
+	public void setChanelNo(String chanelNo) {
 		this.chanelNo = chanelNo;
 	}
 	public String getChannelCategory() {
@@ -22,6 +24,12 @@ public class TVChannel {
 	}
 	public void setChannelCategory(String channelCategory) {
 		this.channelCategory = channelCategory;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	
 	

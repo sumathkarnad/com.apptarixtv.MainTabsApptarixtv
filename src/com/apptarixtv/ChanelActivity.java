@@ -50,7 +50,7 @@ public class ChanelActivity extends Activity {
 		protected Integer doInBackground(Integer... params) {
 			HttpContn conn=new HttpContn();
 			Log.e("mohsin", "in background task..");
-			resp=conn.coonectHttp(ApptarixConstant.ALL_CHANNEL_URL);
+			resp=conn.coonectHttp(ApptarixConstant.ALL_CHANNEL_URL+ApptarixConstant.API_KEY+"&genre=News");
 			parseResponse(resp);
 		//	Log.e("mohsin", "Response= "+resp);
 			return null;
@@ -82,12 +82,14 @@ public class ChanelActivity extends Activity {
 			newsChannel=new ArrayList<TVChannel>();
 			musicChannel=new ArrayList<TVChannel>();
 			JSONObject root=new JSONObject(resp);
-			JSONObject chanobj=new JSONObject(root.getString("channellist"));
-			JSONArray jchannel=new JSONArray(chanobj.getString("channel"));
+			String respcode=root.getString("responseCode");
+			JSONArray jchannel=new JSONArray(root.getString("channels"));
 			for (int i = 0; i < jchannel.length(); i++) {
 				TVChannel channel=new TVChannel();
 				channel.setChannelName(jchannel.getJSONObject(i).getString("name"));
-				channel.setChannelCategory(CATEGORY[Min + (int)(Math.random() * ((Max - Min) + 1))]);
+				channel.setChannelCategory(jchannel.getJSONObject(i).getString("genre"));
+				channel.setChanelNo(jchannel.getJSONObject(i).getString("id"));
+				channel.setChanelNo(jchannel.getJSONObject(i).getString("language"));
 				newsChannel.add(channel);
 //				Log.e("mohsin", "Channel "+i+" "+jchannel.getJSONObject(i).getString("name"));
 //				Log.e("mohsin", "Category "+i+" "+CATEGORY[Min + (int)(Math.random() * ((Max - Min) + 1))]);
